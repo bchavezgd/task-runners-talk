@@ -1,0 +1,22 @@
+.cf:after
+  display: block
+  visibility: hidden
+  content: " "
+  height: 0
+  clear: both
+
+.container
+  min-height: 100vh
+  width: 90vw
+  margin: 0 auto
+  display: flex
+  flex-flow: row nowrap
+  //justify-content: space-around
+  align-items: top
+  //align-content: stretch
+  .left-container
+    order: 1
+    flex-basis: 20%
+  .right-container
+    order: 2
+    flex-basis: 80%

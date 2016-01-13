@@ -1,0 +1,26 @@
+// iso grid work
+$iso-columns: 3
+$iso-container-width: 600px
+$iso-column-width: $iso-container-width / $iso-columns
+$iso-row-height: 100px
+
+// setup for isotope
+.grid
+  display: block
+  width: $iso-container-width
+.iso-grid-sizer
+  width: $iso-column-width
+.grid-item
+  float: left
+  box-sizing: border-box
+  border: 1px solid
+  background-color: gray
+  background-clip: content-box
+  height: $iso-row-height
+  padding: 1rem
+@for $i from 1 through $iso-columns
+  .grid-item--width#{$i}
+    width: $iso-column-width * $i
+@for $i from 1 through $iso-columns
+  .grid-item--height#{$i}
+    height: $iso-row-height * $i
