@@ -1,17 +1,5 @@
 # Modern Task Runners 
 
-
-### Brief. 
-Cut time in your workflow by using a task runner. 
-
-who, what, where, when, why, how
-
-1. What are task runners? 
-2. What do they do?
-3. Why someone would use one.
-4. When would be a good time to use one? 
-5. How to get them to work. 
-
 ## Rewind. 
 
 Websites used to be easy to make. A single html file, a few images, and a Geocities account, and you have yourself a website. Frames were the layout tool of choice, and soon after Tables, then Floats. Now we have Flex-box nearly ready for show time.
@@ -28,9 +16,9 @@ The Introduction of CSS as a separate file was the first abstraction of web tech
 
 Now there are *Preprocessors* that add another layer of abstraction to the core languages of front end design. 
 
-- **CSS:** SASS / LESS / Stylus [3](3)
-- **JavaScript:** Coffescript / Typescript / Livescript / Bable [4](4)
-- **HTML:** HAML / Jade / slim [5](5)
+- **CSS:** SASS / LESS / Stylus
+- **JavaScript:** Coffescript / Typescript / Livescript / Bable
+- **HTML:** HAML / Jade / slim
 
 Since I started using these preprocessors I've found that I make less mistakes, especially the most annoying kind. Like hex code typos for colors, missing closing tags, missed semicolons, and so on. 
 
@@ -46,7 +34,7 @@ $ gem install sass
 $ sass --watch input.scss:output.scss
 ```
 
-This first installs the ruby-sass gem on to your computer, the second line watches the `input.scss` file for changes, then complies it to `output.css`, this is easy enough, but what if you wanted sass to export a minified css file? you would need a `config.rb` to do so. another problem with that is, Ruby isn't well supported on Windows [1](1) [2](2). Now if we wanted to make sure the CSS we are using has the correct prefixes we need to maintain a library of mixins, and remember to update them each time a browser is released. 
+This first installs the ruby-sass gem on to your computer, the second line watches the `input.scss` file for changes, then complies it to `output.css`, this is easy enough, but what if you wanted sass to export a minified css file? you would need a `config.rb` to do so. another problem with that is, Ruby isn't well supported on Windows. Now if we wanted to make sure the CSS we are using has the correct prefixes we need to maintain a library of mixins, and remember to update them each time a browser is released. 
 
 Now lets throw in some JavaScript minification, concatenation, after running it through a JS Linter. There's a lot of work going on for even a simple site. 
 
@@ -59,7 +47,9 @@ Task runners do all these small things, the exact same way, every time I save a 
 
 There are too many task runners to really compare right now. So I'll focus on the 2 most talked about ones. Grunt and Gulp. 
 
-#### Installing
+## Setups
+
+### Installing
 
 Since they are both available through NPM, installing them is identical, first theSecond CLI is installed so the terminal knows what to do when you type in `grunt` or `gulp`. Second is the task runner itself. 
 
@@ -71,7 +61,7 @@ Then to run the tasks it's simple as typing either `grunt` or `gulp`. This will 
 | installing Task Runner| `$ npm install grunt --save-dev` | `$ npm install gulp --save-dev` |
 | Running Tasks  | `$ grunt` | `$ gulp` |
 
-#### setting up the task. 
+### setting up the task. 
 
 1. compile
 2. prefix
@@ -80,7 +70,7 @@ Then to run the tasks it's simple as typing either `grunt` or `gulp`. This will 
 
 For demonstration purposes I'm limiting myself to these 4 tasks. Working with a sass I want to *compile* it down to a CSS file, *Prefix* that file, and have its output *minified*. I want all this to be done every time I save a sass file, and that's where the *Watch* task comes in. 
 
-##### Boilerplate Task Files
+#### Boilerplate Task Files
 
 Both Task runners depend on a file that tells your computer what tasks you want it to do. 
 
@@ -112,7 +102,7 @@ gulp.task('default', []);
 
 Both of these files do nothing, but they are ready to create some tasks. 
 
-##### Finding and Installing Plugins
+### Finding and Installing Plugins
 
 You can goto either Gruntjs.com, or Gulpjs.com and search their plugins. I’ve been able to find most of them on Github as well. for sass i want to use the faster Node based LibSASS plugin. a quick search for "grunt node sass" returns grunt-sass and the counter part is gulp-sass. so next i want to find an autoprefixer, and a way to watch the files for changes.
 
@@ -133,7 +123,7 @@ Side notes:
 
 Now I have the plugins ready to be told what to do. 
 
-##### Defining Tasks
+### Defining Tasks
 
 Once the plugins have been copied into your project's `node_module` folder we can start accessing them from the task files. 
 
@@ -161,7 +151,7 @@ var gulp = require('gulp'),
 
 This is telling the task runners what plugins they should be using.
  
-#### Primary Differences 
+### Primary Differences 
 
 Up to this point the code has been remarkably similar, this is where they start diverging away from each other.  
 
@@ -180,7 +170,7 @@ Gulp tasks are as **functions,** and the patterns are less repetitious than with
 3. creating dependency tasks
 
 But since I'm only worried about one set of tasks at a time, I can still run three difference processes asynchronously, i.e., JavaScript, CSS, Image processing, and HTML manipulations. These are four different workflows that can be put through the same *pipe* all at once, with remarkable speed.
-
+ 
 ##### Setting Up Tasks
 
 Before I even start getting knee deep into setting up my tasks, first I want to make sure that my source and destination files will be in the correct folders. I save the folder locations as variables in the file before I start. 
@@ -204,7 +194,7 @@ dist = './_site';
 ```
 
 
-###### Grunt setup
+#### Grunt setup
 
 Grunt tasks store the task settings as objects, and the patterns get repeated to other plugins.  
 
@@ -239,7 +229,7 @@ which will run the default task, which runs only the sass task. Or I can run the
 
 If this is all I wanted to do that would be a lot of work for something that the sass gem could have done with less setup, but adding a the postcss task and the task runner starts to carry its own weight. 
 
-###### postcss
+##### postcss
 
 ```js
 // css post processer.
@@ -274,6 +264,8 @@ Now the task can be "registered"
 
 and they will run in the order that they are entered here. 
 
+##### Watch
+
 finally I'll add the watch command so I don't have to keep going back to the command line to type `$ grunt` after every time I save my work. 
 
 ```js 
@@ -295,7 +287,7 @@ This is set up to watch all folders, and files, in the sass folder and whenever 
     $ grunt watch
     
 
-###### Gulp Setup
+#### Gulp Setup
 
 For this demonstration, I'm going to make a gulpfile that does the **exact** same thing as my grunt file. 
 
@@ -322,7 +314,7 @@ The options availble are the same Node-sass based options that you can pass in G
     
 It will Run the Sass task, and spit out a CSS file. 
 
-###### postcss
+##### postcss
 
 Setting up the postcss task is similar as the sass task. 
 
@@ -386,7 +378,7 @@ gulp.task('sass', function () {
 });
 ```
 
-###### Gulp Watch
+##### Gulp Watch
 
 Setting up the watch task is more of the same, here's the code. 
 
@@ -396,7 +388,7 @@ gulp.task('watch', function () {
 });
 ```
 
-It defines the folder to watch, and the task to run. Since postcss has a sass dependency both tasks will run in order, and have the same output as Grunt (not confirmed).
+It defines the folder to watch, and the task to run. Since postcss has a sass dependency both tasks will run in order, and have the same output as Grunt.
 
 ## Conclusion. 
 
@@ -406,11 +398,6 @@ Both of these tools where built to increase productivity, and deciding between t
 
 
 -----
-
-[1]: http://daverupert.com/2015/08/developing-on-windows/
-[2]: https://github.com/sparklemotion/nokogiri/issues/1256
-[3]: http://www.sitepoint.com/6-current-options-css-preprocessors/
-[4]: http://blog.codepen.io/documentation/editor/using-js-preprocessors/
 
 ## Cited.
 
