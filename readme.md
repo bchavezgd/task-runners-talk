@@ -34,7 +34,7 @@ $ gem install sass
 $ sass --watch input.scss:output.scss
 ```
 
-This first installs the ruby-sass gem on to your computer, the second line watches the `input.scss` file for changes, then complies it to `output.css`, this is easy enough, but what if you wanted sass to export a minified css file? you would need a `config.rb` to do so. another problem with that is, Ruby isn't well supported on Windows. Now if we wanted to make sure the CSS we are using has the correct prefixes we need to maintain a library of mixins, and remember to update them each time a browser is released. 
+This first installs the ruby-sass gem on to your computer, the second line watches the `input.scss` file for changes, then complies it to `output.css`, this is easy enough, but what if you wanted sass to export a minified css file? You would need a `config.rb` to do so. Another problem with that is, Ruby isn't well supported on Windows. Now if we wanted to make sure the CSS we are using has the correct prefixes we need to maintain a library of mixins, and remember to update them each time a browser is released. 
 
 Now lets throw in some JavaScript minification, concatenation, after running it through a JS Linter. There's a lot of work going on for even a simple site. 
 
@@ -104,7 +104,7 @@ Both of these files do nothing, but they are ready to create some tasks.
 
 ### Finding and Installing Plugins
 
-You can goto either Gruntjs.com, or Gulpjs.com and search their plugins. I’ve been able to find most of them on Github as well. for sass i want to use the faster Node based LibSASS plugin. a quick search for "grunt node sass" returns grunt-sass and the counter part is gulp-sass. so next i want to find an autoprefixer, and a way to watch the files for changes.
+You can goto either Gruntjs.com, or Gulpjs.com and search their plugins. I’ve been able to find most of them on Github as well. For sass I want to use the faster Node based LibSASS plugin. a quick search for "grunt node sass" returns grunt-sass and the counter part is gulp-sass. So next I want to find an autoprefixer, and a way to watch the files for changes.
 
 Searching turns up postcss and a watch plugins that are available for both Grunt and Gulp.
 
@@ -210,9 +210,9 @@ sass: {
 }
 ```
 
-Within the SASS object, there are 2 nested objects telling the task what files to process, and how to process them (options). the options here are pulled from the Node Sass, but for other plugins always refer to the documentation, it's usually useful. 
+Within the SASS object, there are 2 nested objects telling the task what files to process, and how to process them (options). The options here are pulled from the Node Sass, but for other plugins always refer to the documentation, it's usually useful. 
 
-Now the task has been told what to do, i need to make sure it knows when to do it. at the bottom of the Grunt file the task needs to be "registered."
+Now the task has been told what to do, I need to make sure it knows when to do it. At the bottom of the Grunt file the task needs to be "registered."
 
 ```js 
 /* Register Tasks */
@@ -223,7 +223,7 @@ so now in the command line I can enter
 
     $ grunt
     
-which will run the default task, which runs only the sass task. Or I can run the Sass task directly with 
+Which will run the default task, which runs only the sass task. Or I can run the Sass task directly with 
 
     $ grunt sass
 
@@ -236,7 +236,7 @@ If this is all I wanted to do that would be a lot of work for something that the
 postcss: {
   options: {
     map: {
-      inline: true // save all sourcemaps as separate files...
+      inline: true // save all source maps as separate files...
     },
     processors: [
 require('autoprefixer')({
@@ -262,11 +262,11 @@ Now the task can be "registered"
     grunt.registerTask('default', ['sass', 'postcss']);
 ```
 
-and they will run in the order that they are entered here. 
+And they will run in the order that they are entered here. 
 
 ##### Watch
 
-finally I'll add the watch command so I don't have to keep going back to the command line to type `$ grunt` after every time I save my work. 
+Finally I'll add the watch command so I don't have to keep going back to the command line to type `$ grunt` after every time I save my work. 
 
 ```js 
 watch: {
@@ -282,7 +282,7 @@ watch: {
 }
 ```
 
-This is set up to watch all folders, and files, in the sass folder and whenever Grunt detects a change, it runs the tasks speficied, with the defined options. To get that started, I just goto my command line and use: 
+This is set up to watch all folders, and files, in the sass folder and whenever Grunt detects a change, it runs the tasks specified, with the defined options. To get that started, I just goto my command line and use: 
 
     $ grunt watch
     
@@ -308,7 +308,7 @@ gulp.task('sass', function () {
 
 When activated it looks for the file specified, and spits out a processed css file. 
 
-The options availble are the same Node-sass based options that you can pass in Grunt, in the same way. Now with the command line I can run;
+The options available are the same Node-sass based options that you can pass in Grunt, in the same way. Now with the command line I can run;
 
     $ gulp sass
     
@@ -332,11 +332,11 @@ gulp.task('postcss', function () {
 });
 ```
 
-Now in the command line 
+Now in the command line. 
 
     $ gulp postcss
     
-will add prefixes to whenever necessary to the style.css which the sass taks spit out. 
+Will add prefixes to whenever necessary to the style.css which the sass task spit out. 
 
 I add this to the `default` task. 
 
@@ -344,7 +344,9 @@ I add this to the `default` task.
 gulp.task('default', ['sass', 'postcss'])
 ```
 
-Running the default task now would run both the Sass and Postcss task asynchonously and sometimes they work right... but usually not. So to insure that they run in the correct order I need to make the run in  order (synchonously). I'll do this by making the postcss task dependent on the sass task. first I'll modify the postcss code. 
+##### Making them run Synchronously 
+
+Running the default task now would run both the Sass and Postcss task asynchronously and sometimes they work right... but usually not. So to insure that they run in the correct order I need to make the run in  order (synchronously). I'll do this by making the postcss task dependent on the sass task. First I'll modify the postcss code. 
 
 ```js
 gulp.task('postcss', ['sass'], function () {

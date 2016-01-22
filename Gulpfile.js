@@ -12,32 +12,29 @@ var gulp = require('gulp'),
 	dist = './_site';
 
 // defining tasks
-gulp.task('default', ['postcss']);
+gulp.task('default', ['sass']);
 
 gulp.task('sass', function () {
-	return  gulp.src( src + '/sass/style.sass')
+	gulp.src( src + '/sass/style.sass')
     .pipe(
     	sass({
 	      /* options */
 	      outputStyle: 'expanded'
 	    })
     )
-    .pipe( gulp.dest( dist ) )
-});
-
-gulp.task('postcss', ['sass'], function () {
-  gulp.src(dist + '/*.css')
     .pipe(postcss([
       /* postcss plugins */
       autoprefixer({
         /* options */
         browsers: ['last 3 version']
-      }),
-      cssnano
+      })
+//      , cssnano
     ]))
-    .pipe( gulp.dest(dist) )
+    .pipe( gulp.dest( dist ) )
 });
 
+
+
 gulp.task('watch', function () {
-    gulp.watch(src + 'sass/**/*', ['postcss']);
+    gulp.watch(src + 'sass/**/*', ['sass']);
 });
